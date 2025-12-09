@@ -40,7 +40,8 @@ public class FieldCentricDrive extends OpMode {
         Intake2 = hardwareMap.get(DcMotor.class, "Intake2");
 
         FR.setDirection(DcMotorSimple.Direction.REVERSE);
-        BR.setDirection(DcMotorSimple.Direction.REVERSE);
+        FL.setDirection(DcMotorSimple.Direction.REVERSE);
+        BL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         odo.setOffsets(-84.0, -168.0, DistanceUnit.MM);
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
@@ -61,9 +62,9 @@ public class FieldCentricDrive extends OpMode {
 
     public void move()
     {
-        double forward = gamepad1.left_stick_y;
-        double strafe = -gamepad1.left_stick_x;
-        double rotate = gamepad1.right_stick_x;
+        double forward = -gamepad1.left_stick_y;
+        double strafe = gamepad1.left_stick_x;
+        double rotate = -gamepad1.right_stick_x;
 
         Pose2D pose = odo.getPosition();
         double heading = pose.getHeading(AngleUnit.RADIANS);
@@ -123,9 +124,19 @@ public class FieldCentricDrive extends OpMode {
     {
         move();
 
+        double SPower = -0.65;
+
+        if (gamepad1.dpad_down)
+        {
+            SPower = -0.65;
+        } else if (gamepad1.dpad_up)
+        {
+            SPower = -0.9;
+        }
+
         if (gamepad1.right_trigger != 0)
         {
-            Shooter.setPower(-0.6);
+            Shooter.setPower(SPower);
         }
         else if (gamepad1.left_trigger != 0)
         {
