@@ -38,7 +38,7 @@ public class BasicDrive extends OpMode
     {
         double SPower = -0.65;
         double JoystickY = -gamepad1.left_stick_y;
-        double JoystickX = -gamepad1.right_stick_x;
+        double JoystickX = gamepad1.right_stick_x;
 
         if (gamepad1.dpad_down)
         {
