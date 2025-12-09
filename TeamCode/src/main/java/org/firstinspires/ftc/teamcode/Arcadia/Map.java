@@ -1,21 +1,25 @@
 package org.firstinspires.ftc.teamcode.Arcadia;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
 public class Map
 {
-    private DcMotor FL;
-    private DcMotor FR;
-    private DcMotor BL;
-    private DcMotor BR;
-
+    private DcMotor FL, FR, BL, BR;
     private GoBildaPinpointDriver odo;
+
+    // Ganancias del controlador
+    private final double kP_xy = 0.10;      // Control de posición
+    private final double kP_heading = 2.0;  // Giro suave pero firme
+    private final double minPower = 0.08;   // Para romper fricción
+    private final double maxPower = 0.55;   // Limite seguro
+
+    // Anti-rotación por desbalance del robot
+    private final double antiRotateGain = 0.15;
 
     public Map(DcMotor fl, DcMotor fr, DcMotor bl, DcMotor br, GoBildaPinpointDriver odometry)
     {
@@ -25,59 +29,104 @@ public class Map
         this.BR = br;
         this.odo = odometry;
     }
+
     public boolean run_To_Position(double targetX, double targetY, double targetAngle)
     {
-        Pose2D Pos = odo.getPosition();
-        double PosX = Pos.getX(DistanceUnit.INCH);
-        double PosY = Pos.getY(DistanceUnit.INCH);
-        double heading = Pos.getHeading(AngleUnit.RADIANS);
+        Pose2D pos = odo.getPosition();
 
-        double rot_angle = -heading;
-        double sin = Math.sin(rot_angle);
-        double cos = Math.cos(rot_angle);
+        double x = pos.getX(DistanceUnit.INCH);
+        double y = pos.getY(DistanceUnit.INCH);
+        double heading = pos.getHeading(AngleUnit.RADIANS);
 
-        double dx = targetX - PosX;
-        double dy = targetY - PosY;
-        double dError = Math.hypot(dx, dy);
+        // Errores
+        double dx = targetX - x;
+        double dy = targetY - y;
 
-        double Tolerancia = 1.0;
+        // Distancia al objetivo
+        double distance = Math.hypot(dx, dy);
 
-        if (dError <= Tolerancia)
+        // Tolerancia
+        if (distance < 0.8 && Math.abs(AngleUnit.normalizeDegrees(targetAngle - pos.getHeading(AngleUnit.DEGREES))) < 2)
         {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-
+            stop();
             return true;
         }
 
-        double XPower = dx / dError;
-        double YPower = dy / dError;
+        // --- CONTROL PROPORCIONAL EN X Y Y (global) ---
+        double powerX_global = dx * kP_xy;
+        double powerY_global = dy * kP_xy;
 
-        double drive  =  YPower * cos - XPower * sin;
-        double strafe =  YPower * sin + XPower * cos;
+        // Desacelerar suavemente al acercarse
+        double slowFactor = Math.min(1.0, distance / 8);
+        powerX_global *= slowFactor;
+        powerY_global *= slowFactor;
 
+        // --- ROTACIÓN GLOBAL → ROBOT CENTRIC ---
+        double cos = Math.cos(-heading);
+        double sin = Math.sin(-heading);
 
-        double targetRad = AngleUnit.DEGREES.toRadians(targetAngle);
-        double headingE = AngleUnit.normalizeRadians(targetRad - heading);
-        double T = 0.5 * headingE;
+        double powerX_robot = powerX_global * cos - powerY_global * sin;
+        double powerY_robot = powerX_global * sin + powerY_global * cos;
 
-        double Y = 0.5 * drive;
-        double X = 0.5 * strafe;
+        // --- CONTROL PROPORCIONAL DE HEADING ---
+        double targetRad = Math.toRadians(targetAngle);
+        double headingError = AngleUnit.normalizeRadians(targetRad - heading);
+        double turn = headingError * kP_heading;
 
-        double[] speed = new double[4];
+        // --- ANTI-ROTACION POR STRAFE (COMPENSA PESO) ---
+        double antiRotate = antiRotateGain * powerX_robot;
 
-        speed[0] = (Y - X - T);
-        speed[1] = (Y + X + T);
-        speed[2] = (Y + X - T);
-        speed[3] = (Y - X + T);
+        turn -= antiRotate;
 
-        FL.setPower(speed[0]);
-        FR.setPower(speed[1]);
-        BL.setPower(speed[2]);
-        BR.setPower(speed[3]);
+        // --- Aplicar potencias ---
+        double fl =  powerY_robot - powerX_robot - turn;
+        double fr =  powerY_robot + powerX_robot + turn;
+        double bl =  powerY_robot + powerX_robot - turn;
+        double br =  powerY_robot - powerX_robot + turn;
+
+        // Normalizar potencias
+        double max = Math.max(1.0,
+                Math.max(Math.abs(fl),
+                        Math.max(Math.abs(fr),
+                                Math.max(Math.abs(bl), Math.abs(br)))));
+
+        fl /= max;
+        fr /= max;
+        bl /= max;
+        br /= max;
+
+        // Aplicar mínimo para vencer fricción
+        fl = applyMinPower(fl);
+        fr = applyMinPower(fr);
+        bl = applyMinPower(bl);
+        br = applyMinPower(br);
+
+        // Aplicar máximo de seguridad
+        fl *= maxPower;
+        fr *= maxPower;
+        bl *= maxPower;
+        br *= maxPower;
+
+        FL.setPower(fl);
+        FR.setPower(fr);
+        BL.setPower(bl);
+        BR.setPower(br);
 
         return false;
+    }
+
+    private double applyMinPower(double p)
+    {
+        if (Math.abs(p) < minPower && Math.abs(p) > 0)
+            return Math.signum(p) * minPower;
+        return p;
+    }
+
+    private void stop()
+    {
+        FL.setPower(0);
+        FR.setPower(0);
+        BL.setPower(0);
+        BR.setPower(0);
     }
 }

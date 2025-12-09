@@ -79,10 +79,10 @@ public class FieldCentricDrive extends OpMode {
 
         double[] newSpeed = new double[4];
 
-        newSpeed[0] = (globalForward - globalStrafe - rotate) * 0.5;
-        newSpeed[1] = (globalForward + globalStrafe + rotate) * 0.5;
-        newSpeed[2] = (globalForward + globalStrafe - rotate) * 0.5;
-        newSpeed[3] = (globalForward - globalStrafe + rotate) * 0.5;
+        newSpeed[0] = (globalForward - globalStrafe - rotate);
+        newSpeed[1] = (globalForward + globalStrafe + rotate);
+        newSpeed[2] = (globalForward + globalStrafe - rotate);
+        newSpeed[3] = (globalForward - globalStrafe + rotate);
 
         double max = Math.abs(newSpeed[0]);
         for (int i = 1; i < newSpeed.length; i++)
