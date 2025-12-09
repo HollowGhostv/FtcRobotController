@@ -27,7 +27,7 @@ public class Test extends OpMode
     private DcMotor Intake2;
     private DcMotor Shooter;
     private Map Map;
-    double targetX = 96.0;
+    double targetX = 0.0;
     double targetY = 10.0;
     double targetAngle = 0.0;
 
@@ -45,17 +45,19 @@ public class Test extends OpMode
         Intake2 = hardwareMap.get(DcMotor.class, "Intake2");
         Shooter = hardwareMap.get(DcMotor.class, "Shooter");
 
-        Map = new Map(FL,FR, BL, BR, odo);
-
-        BR.setDirection(DcMotorSimple.Direction.REVERSE);
-
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         odo.setOffsets(-84.0, -168.0, DistanceUnit.MM);
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         odo.resetPosAndIMU();
 
-        Pose2D StartPos = new Pose2D(DistanceUnit.INCH, 96.0, 0.0, AngleUnit.DEGREES, 0);
+        Pose2D StartPos = new Pose2D(DistanceUnit.INCH, 0.0, 0.0, AngleUnit.DEGREES, 0);
         odo.setPosition(StartPos);
+
+        FL.setDirection(DcMotorSimple.Direction.REVERSE);
+        FR.setDirection(DcMotorSimple.Direction.REVERSE);
+        BL.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        Map = new Map(FL,FR, BL, BR, odo);
 
         telemetry.addData("Status", "Initialized");
         telemetry.addData("X offset", odo.getXOffset(DistanceUnit.MM));
