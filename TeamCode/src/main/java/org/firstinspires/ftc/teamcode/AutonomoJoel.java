@@ -10,14 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class AutonomoJoel extends LinearOpMode
 {
-    DcMotor FL;
-    DcMotor FR;
-    DcMotor BL;
-    DcMotor BR;
-    DcMotor Intake1;
-    DcMotor Intake2;
-    DcMotor Shooter;
-    GoBildaPinpointDriver odo;
+    private DcMotor FL;
+    private DcMotor FR;
+    private DcMotor BL;
+    private DcMotor BR;
+    private DcMotor Intake1;
+    private DcMotor Intake2;
+    private DcMotor Shooter;
+    private GoBildaPinpointDriver odo;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,80 +34,12 @@ public class AutonomoJoel extends LinearOpMode
         BL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.FORWARD);
 
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "Odo");
+
+
         {
             waitForStart();
-            FL.setPower(0.5);
-            FR.setPower(0.5);
-            BL.setPower(0.5);
-            BR.setPower(0.5);
-            sleep(4000);
 
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            sleep(1000);
-
-            FL.setPower(0.5);
-            FR.setPower(-0.5);
-            BL.setPower(0.5);
-            BR.setPower(-0.5);
-            sleep(1000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            sleep(1000);
-
-            FL.setPower(0.5);
-            FR.setPower(0.5);
-            BL.setPower(0.5);
-            BR.setPower(0.5);
-            Intake1.setPower(1);
-            sleep(1000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            sleep(1000);
-
-            FL.setPower(-0.5);
-            FR.setPower(-0.5);
-            BL.setPower(-0.5);
-            BR.setPower(-0.5);
-            Intake1.setPower(1);
-            sleep(1000);
-
-            FL.setPower(-0.5);
-            FR.setPower(0.5);
-            BL.setPower(-0.5);
-            BR.setPower(0.5);
-            sleep(1000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            Shooter.setPower(0.7);
-            sleep(2000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            Shooter.setPower(0.7);
-            Intake2.setPower(1);
-            sleep(1000);
-
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            Shooter.setPower(0);
-            Intake2.setPower(0);
-            sleep(2000);
         }
     }
 }
