@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous
 
-public class AutonomoJoel extends LinearOpMode
+public class TeamRedUp extends LinearOpMode
 {
     private DcMotor FL;
     private DcMotor FR;
