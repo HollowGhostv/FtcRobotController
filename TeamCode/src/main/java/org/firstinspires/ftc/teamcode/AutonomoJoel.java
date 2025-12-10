@@ -46,6 +46,68 @@ public class AutonomoJoel extends LinearOpMode
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
+            sleep(1000);
+
+            FL.setPower(0.5);
+            FR.setPower(-0.5);
+            BL.setPower(0.5);
+            BR.setPower(-0.5);
+            sleep(1000);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            sleep(1000);
+
+            FL.setPower(0.5);
+            FR.setPower(0.5);
+            BL.setPower(0.5);
+            BR.setPower(0.5);
+            Intake1.setPower(1);
+            sleep(1000);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            sleep(1000);
+
+            FL.setPower(-0.5);
+            FR.setPower(-0.5);
+            BL.setPower(-0.5);
+            BR.setPower(-0.5);
+            Intake1.setPower(1);
+            sleep(1000);
+
+            FL.setPower(-0.5);
+            FR.setPower(0.5);
+            BL.setPower(-0.5);
+            BR.setPower(0.5);
+            sleep(1000);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Shooter.setPower(0.7);
+            sleep(2000);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Shooter.setPower(0.7);
+            Intake2.setPower(1);
+            sleep(1000);
+
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Shooter.setPower(0);
+            Intake2.setPower(0);
+            sleep(2000);
         }
     }
 }
