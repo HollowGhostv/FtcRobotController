@@ -136,6 +136,9 @@ public class TestSimple extends OpMode
             FR.setPower(0.3);
             BL.setPower(-0.3);
             BR.setPower(0.3);
+
+            Intake2.setPower(0);
+            Shooter.setPower(0);
         }
         else if (currentPos.getHeading(AngleUnit.DEGREES) >= -150 && !step5 && TurnStep5)
         {
