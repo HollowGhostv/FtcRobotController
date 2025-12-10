@@ -10,8 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
-import java.util.concurrent.TimeUnit;
-
 @Autonomous
 public class TestSimple extends OpMode
 {
@@ -32,6 +30,10 @@ public class TestSimple extends OpMode
     boolean step4 = false;
     boolean TurnStep5 = false;
     boolean step5 = false;
+    boolean TurnStep6 = false;
+    boolean step6 = false;
+    boolean TurnStep7 = false;
+    boolean step7 = false;
     @Override
     public void init()
     {
@@ -78,10 +80,7 @@ public class TestSimple extends OpMode
         }
         else if (currentPos.getX(DistanceUnit.CM) >= 35 && !step1)
         {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
+            stop();
             step1 = true;
             TurnStep2 = true;
         }
@@ -94,10 +93,7 @@ public class TestSimple extends OpMode
         }
         else if (odo.getHeading(AngleUnit.DEGREES) >= 90 && !step2 && TurnStep2)
         {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
+            stop();
             step2 = true;
             odo.resetPosAndIMU();
             Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
@@ -114,10 +110,7 @@ public class TestSimple extends OpMode
         }
         else if (currentPos.getX(DistanceUnit.CM) >= 45 && !step3 && TurnStep3)
         {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
+            stop();
             step3 = true;
             TurnStep4 = true;
         }
@@ -131,22 +124,68 @@ public class TestSimple extends OpMode
         }
         else if (currentPos.getHeading(AngleUnit.DEGREES) <= -170 && !step4 && TurnStep4)
         {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
+            stop();
             step4 = true;
             Intake2.setPower(1);
             TurnStep5 = true;
         }
 
+        if (currentPos.getHeading(AngleUnit.DEGREES) < -150 && !step5 && TurnStep5)
+        {
+            FL.setPower(-0.3);
+            FR.setPower(0.3);
+            BL.setPower(-0.3);
+            BR.setPower(0.3);
+        }
+        else if (currentPos.getHeading(AngleUnit.DEGREES) >= -150 && !step5 && TurnStep5)
+        {
+            stop();
+            odo.resetPosAndIMU();
+            Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
+            odo.setPosition(startPos);
+            step5 = true;
+            TurnStep6 = true;
+        }
 
+        if (currentPos.getX(DistanceUnit.CM) < 35 && !step6 && TurnStep6)
+        {
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
+        }
+        else if (currentPos.getX(DistanceUnit.CM) >= 35 && !step6 && TurnStep6)
+        {
+            stop();
+            step6 = true;
+            TurnStep7 = true;
+        }
 
+        if (currentPos.getHeading(AngleUnit.DEGREES) > -90 && !step7 && TurnStep7)
+        {
+            FL.setPower(0.3);
+            FR.setPower(-0.3);
+            BL.setPower(0.3);
+            BR.setPower(-0.3);
+        }
+        else if (currentPos.getHeading(AngleUnit.DEGREES) <= -90 && !step7 && TurnStep7)
+        {
+            stop();
+            step7 = true;
+        }
 
         odo.update();
         telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
         telemetry.addData("Y: ", currentPos.getY(DistanceUnit.CM));
         telemetry.addData("Angle: ", currentPos.getHeading(AngleUnit.DEGREES));
         telemetry.update();
+    }
+
+    public void stop()
+    {
+        FL.setPower(0);
+        FR.setPower(0);
+        BL.setPower(0);
+        BR.setPower(0);
     }
 }
