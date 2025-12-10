@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Autonomous
-
 public class TeamRedUp extends LinearOpMode
 {
     private DcMotor FL;
@@ -16,9 +21,12 @@ public class TeamRedUp extends LinearOpMode
     private DcMotor Intake2;
     private DcMotor Shooter;
     private GoBildaPinpointDriver odo;
+    private  ElapsedTime Time = new ElapsedTime();
+
+    boolean step1 = false;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         FL = hardwareMap.get(DcMotor.class, "FL");
         FR = hardwareMap.get(DcMotor.class, "FR");
         BL = hardwareMap.get(DcMotor.class, "BL");
@@ -34,10 +42,39 @@ public class TeamRedUp extends LinearOpMode
 
         odo = hardwareMap.get(GoBildaPinpointDriver.class, "Odo");
 
+        odo.setOffsets(-84.0, -168.0, DistanceUnit.MM);
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        odo.resetPosAndIMU();
+        Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
+        odo.setPosition(startPos);
 
+        telemetry.addData("X: ", startPos.getX(DistanceUnit.METER));
+        telemetry.addData("Y: ", startPos.getY(DistanceUnit.METER));
+        telemetry.addData("Angle: ", startPos.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Offset X: ", odo.getXOffset(DistanceUnit.MM));
+        telemetry.addData("Offset Y", odo.getYOffset(DistanceUnit.MM));
+    }
+    @Override
+    public void loop()
+    {
+        Pose2D currentPos = odo.getPosition();
+
+        if (currentPos.getX(DistanceUnit.CM)  > 200 && !step1)
         {
-            waitForStart();
-
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
+            Shooter.setPower(-0.55);
+        }
+        else if (currentPos.getX(DistanceUnit.CM) = 200 && !step1)
+        {
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Intake2.setPower(1);
         }
     }
 }
