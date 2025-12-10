@@ -52,8 +52,8 @@ public class AutonomoTony extends LinearOpMode
                 sleep(1000);
 
                 FR.setPower(-0.3);
-                FL.setPower(-0.3);
-                BR.setPower(0.3);
+                FL.setPower(0.3);
+                BR.setPower(-0.3);
                 BL.setPower(0.3);
 
                 sleep(2500);
@@ -75,8 +75,8 @@ public class AutonomoTony extends LinearOpMode
                 sleep(1000);
 
                 FR.setPower(0.3);
-                FL.setPower(0.3);
-                BR.setPower(-0.3);
+                FL.setPower(-0.3);
+                BR.setPower(0.3);
                 BL.setPower(-0.3);
 
                 sleep(2500);
