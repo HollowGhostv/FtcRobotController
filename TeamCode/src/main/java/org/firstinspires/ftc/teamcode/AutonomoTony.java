@@ -87,7 +87,7 @@ public class AutonomoTony extends LinearOpMode
                 BL.setPower(0);
                 Shooter.setPower(1);
 
-                sleep(5000);
+                sleep(3000);
 
                 FR.setPower(0);
                 FL.setPower(0);
