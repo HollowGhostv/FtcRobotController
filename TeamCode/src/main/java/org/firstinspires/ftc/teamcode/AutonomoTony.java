@@ -33,6 +33,7 @@ public class AutonomoTony extends LinearOpMode
         Shooter = hardwareMap.get(DcMotor.class, "Shooter");
 
         FL.setDirection(DcMotorSimple.Direction.REVERSE);
+        FR.setDirection(DcMotorSimple.Direction.REVERSE);
         BL.setDirection(DcMotorSimple.Direction.REVERSE);
             waitForStart();
 
@@ -51,70 +52,6 @@ public class AutonomoTony extends LinearOpMode
 
                 sleep(1000);
 
-                FR.setPower(-0.3);
-                FL.setPower(0.3);
-                BR.setPower(-0.3);
-                BL.setPower(0.3);
-
-                sleep(2500);
-
-                FR.setPower(0.3);
-                FL.setPower(0.3);
-                BR.setPower(0.3);
-                BL.setPower(0.3);
-                Intake1.setPower(-1);
-
-                sleep(3000);
-
-                FR.setPower(0);
-                FL.setPower(0);
-                BR.setPower(0);
-                BL.setPower(0);
-                Intake1.setPower(0);
-
-                sleep(1000);
-
-                FR.setPower(0.3);
-                FL.setPower(-0.3);
-                BR.setPower(0.3);
-                BL.setPower(-0.3);
-
-                sleep(2500);
-
-                FR.setPower(0);
-                FL.setPower(0);
-                BR.setPower(0);
-                BL.setPower(0);
-                Shooter.setPower(1);
-
-                sleep(3000);
-
-                FR.setPower(0);
-                FL.setPower(0);
-                BR.setPower(0);
-                BL.setPower(0);
-                Shooter.setPower(1);
-                Intake2.setPower(1);
-
-                sleep(1000);
-
-                FR.setPower(0);
-                FL.setPower(0);
-                BR.setPower(0);
-                BL.setPower(0);
-                Shooter.setPower(0);
-                Intake2.setPower(0);
-
-                sleep(1000);
-
-
-
-
         } //wait for star final//
-
-
-
-
-
     } //Public void Final
 } //AutonomoTony Final//
