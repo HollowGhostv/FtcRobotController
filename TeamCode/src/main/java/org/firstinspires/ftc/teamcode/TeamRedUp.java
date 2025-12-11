@@ -64,10 +64,10 @@ public class TeamRedUp extends OpMode
 
         if (currentPos.getX(DistanceUnit.CM) < 200 && !step1)
         {
-            FL.setPower(0.3);
-            FR.setPower(0.3);
-            BL.setPower(0.3);
-            BR.setPower(0.3);
+            FL.setPower(-0.3);
+            FR.setPower(-0.3);
+            BL.setPower(-0.3);
+            BR.setPower(-0.3);
             Shooter.setPower(-0.55);
         }
         else if (currentPos.getX(DistanceUnit.CM) >= 200 && !step1)
