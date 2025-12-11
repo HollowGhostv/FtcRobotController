@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -11,8 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
-@Autonomous
-public class TeamRedDown extends OpMode
+public class TeamBlueDown extends OpMode
 {
     private DcMotor FL;
     private DcMotor FR;
@@ -85,19 +85,19 @@ public class TeamRedDown extends OpMode
             step1 = true;
             TurnStep2 = true;
         }
-        if (odo.getHeading(AngleUnit.DEGREES) < 90 && !step2 && TurnStep2)
+        if (odo.getHeading(AngleUnit.DEGREES) > -90 && !step2 && TurnStep2)
         {
-            FL.setPower(-0.3);
-            FR.setPower(0.3);
-            BL.setPower(-0.3);
-            BR.setPower(0.3);
+            FL.setPower(0.3);
+            FR.setPower(-0.3);
+            BL.setPower(0.3);
+            BR.setPower(-0.3);
         }
-        else if (odo.getHeading(AngleUnit.DEGREES) >= 90 && !step2 && TurnStep2)
+        else if (odo.getHeading(AngleUnit.DEGREES) <= -90 && !step2 && TurnStep2)
         {
             stop();
             step2 = true;
             odo.resetPosAndIMU();
-            Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
+            Pose2D startPos = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
             odo.setPosition(startPos);
             TurnStep3 = true;
         }
@@ -116,14 +116,14 @@ public class TeamRedDown extends OpMode
             TurnStep4 = true;
         }
 
-        if (currentPos.getHeading(AngleUnit.DEGREES) > -175 && !step4 && TurnStep4)
+        if (currentPos.getHeading(AngleUnit.DEGREES) < 175 && !step4 && TurnStep4)
         {
             FL.setPower(0.3);
             FR.setPower(-0.3);
             BL.setPower(0.3);
             BR.setPower(-0.3);
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) <= -175 && !step4 && TurnStep4)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 175 && !step4 && TurnStep4)
         {
             stop();
             step4 = true;
@@ -131,21 +131,21 @@ public class TeamRedDown extends OpMode
             TurnStep5 = true;
         }
 
-        if (currentPos.getHeading(AngleUnit.DEGREES) < -110 && !step5 && TurnStep5)
+        if (currentPos.getHeading(AngleUnit.DEGREES) > 110 && !step5 && TurnStep5)
         {
             Time.startTime();
 
             if (Time.seconds() < 5)
             {
-                FL.setPower(0.3);
-                FR.setPower(-0.3);
-                BL.setPower(0.3);
-                BR.setPower(-0.3);
+                FL.setPower(-0.3);
+                FR.setPower(0.3);
+                BL.setPower(-0.3);
+                BR.setPower(0.3);
 
                 Shooter.setPower(0);
             }
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) >= -110 && !step5 && TurnStep5)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) <= 110 && !step5 && TurnStep5)
         {
             stop();
             odo.resetPosAndIMU();
@@ -169,14 +169,14 @@ public class TeamRedDown extends OpMode
             TurnStep7 = true;
         }
 
-        if (currentPos.getHeading(AngleUnit.DEGREES) > -90 && !step7 && TurnStep7)
+        if (currentPos.getHeading(AngleUnit.DEGREES) < 90 && !step7 && TurnStep7)
         {
-            FL.setPower(0.3);
-            FR.setPower(-0.3);
-            BL.setPower(0.3);
-            BR.setPower(-0.3);
+            FL.setPower(-0.3);
+            FR.setPower(0.3);
+            BL.setPower(-0.3);
+            BR.setPower(0.3);
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) <= -90 && !step7 && TurnStep7)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 90 && !step7 && TurnStep7)
         {
             stop();
             Shooter.setPower(0);
