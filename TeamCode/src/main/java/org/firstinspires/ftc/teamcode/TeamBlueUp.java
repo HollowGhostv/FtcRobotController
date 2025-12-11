@@ -86,6 +86,7 @@ public class TeamBlueUp extends OpMode
             BL.setPower(0);
             BR.setPower(0);
             Shooter.setPower(-0.63);
+            Intake2.setPower(-1);
             Step1 = true;
             ChangeStep2 = true;
         }
