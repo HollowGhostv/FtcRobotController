@@ -27,6 +27,9 @@ public class TeamRedUp extends OpMode
     boolean step2 = false;
     boolean TurnStep3 = false;
     boolean step3 = false;
+    boolean TurnStep4 = false;
+    boolean step4 = false;
+
 
     @Override
     public void init()
@@ -72,15 +75,28 @@ public class TeamRedUp extends OpMode
         }
         else if (currentPos.getX(DistanceUnit.CM) <= -200 && !step1)
         {
+            stop();
+            step1 = true;
+            TurnStep2 = true;
+        }
+        if (currentPos.getX(DistanceUnit.CM) == -200 && !step2 && TurnStep2)
+        {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
-            Intake2.setPower(0.63);
-            step1 = true;
-            TurnStep2 = true;
+            Shooter.setPower(0.55);
+            Intake2.setPower(1);
+            step2 = true;
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step2 && TurnStep2)
+        else if (currentPos.getX(DistanceUnit.CM) != -200 && !step2 && TurnStep2)
+        {
+            stop();
+            step1 = false;
+            TurnStep2 = false;
+        }
+
+        if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step3 && TurnStep3)
         {
             FL.setPower(0.3);
             FR.setPower(-0.3);
@@ -90,25 +106,26 @@ public class TeamRedUp extends OpMode
             Shooter.setPower(0);
 
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step3 && TurnStep3)
         {
             stop();
-            step2 = true;
-            TurnStep3 = true;
+            step3 = true;
+            TurnStep4 = true;
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step3 && TurnStep3)
+        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step4 && TurnStep4)
         {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
-            step3 = true;
+            step4 = true;
+            TurnStep4 = true;
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step3 && TurnStep3)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step4 && TurnStep4)
         {
             stop();
-            step2 = false;
-            TurnStep3 = false;
+            step3 = false;
+            TurnStep4 = false;
         }
         odo.update();
         telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
