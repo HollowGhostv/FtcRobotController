@@ -77,7 +77,7 @@ public class TeamBlueUp extends OpMode
             FR.setPower(-0.4);
             BL.setPower(-0.4);
             BR.setPower(-0.4);
-            Shooter.setPower(-0.63);
+            Shooter.setPower(-0.65);
             Intake2.setPower(0);
         }
         else if(currentPos.getX(DistanceUnit.CM) <= -164 && !Step1)
