@@ -74,10 +74,10 @@ public class AutonomoTony extends OpMode
 
         if(currentPos.getX(DistanceUnit.CM) < 61 && !Step1)
         {
-            FL.setPower(0.4);
-            FR.setPower(0.4);
-            BL.setPower(0.4);
-            BR.setPower(0.4);
+            FL.setPower(-0.4);
+            FR.setPower(-0.4);
+            BL.setPower(-0.4);
+            BR.setPower(-0.4);
         }
         else if(currentPos.getX(DistanceUnit.CM) >= 61 && !Step1)
         {
