@@ -82,29 +82,33 @@ public class TeamRedUp extends OpMode
             TurnStep2 = true;
         }
 
-        if (odo.getHeading(AngleUnit.DEGREES) < 45 && !step2 && TurnStep2)
+        if (odo.getHeading(AngleUnit.DEGREES) != 45 && !step2 && TurnStep2)
         {
             Time.startTime();
 
             if (Time.seconds() < 5)
             {
-                FL.setPower(0.3);
-                FR.setPower(-0.3);
-                BL.setPower(0.3);
-                BR.setPower(-0.3);
+                FL.setPower(0.2);
+                FR.setPower(-0.2);
+                BL.setPower(0.2);
+                BR.setPower(-0.2);
                 Intake2.setPower(0);
                 Shooter.setPower(0);
             }
         }
-
-        else if (odo.getHeading(AngleUnit.DEGREES) >= 45 && !step2 && TurnStep2)
+        else if (odo.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
         {
-
+            stop();
+            step2 = true;
+            TurnStep3 = true;
         }
-
-
-
-
+         if (odo.getHeading(AngleUnit.DEGREES) == 45 && !step3 && TurnStep3)
+         {
+             FL.setPower(0.3);
+             FR.setPower(0.3);
+             BL.setPower(0.3);
+             BR.setPower(0.3);
+         }
         odo.update();
         telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
         telemetry.addData("Y: ", currentPos.getY(DistanceUnit.CM));
