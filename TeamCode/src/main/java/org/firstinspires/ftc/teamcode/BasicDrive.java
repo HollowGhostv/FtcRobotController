@@ -37,8 +37,8 @@ public class BasicDrive extends OpMode
     public void loop()
     {
         double SPower = -0.65;
-        double JoystickY = -gamepad1.left_stick_y;
-        double JoystickX = gamepad1.right_stick_x;
+        double JoystickY = gamepad1.left_stick_y;
+        double JoystickX = -gamepad1.right_stick_x;
 
         if (gamepad1.dpad_down)
         {
@@ -46,7 +46,7 @@ public class BasicDrive extends OpMode
         }
         else if (gamepad1.dpad_up)
         {
-            SPower = -0.9;
+            SPower = -0.8;
         }
 
         if (JoystickY != 0)
@@ -80,13 +80,17 @@ public class BasicDrive extends OpMode
             Shooter.setPower(0);
         }
 
-        if (gamepad1.b)
+        if (gamepad1.a)
         {
             Intake1.setPower(-1);
         }
-        else
+        else if (gamepad1.b)
         {
             Intake1.setPower(1);
+        }
+        else
+        {
+            Intake1.setPower(0);
         }
 
         if (gamepad1.right_bumper)
