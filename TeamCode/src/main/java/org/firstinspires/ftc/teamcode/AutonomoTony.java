@@ -2,28 +2,41 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
 @Autonomous
 
-public class AutonomoTony extends LinearOpMode
+public class AutonomoTony extends OpMode
 { //AutonomoTony Inicio//
-    DcMotor FL; //Motor Mecanum
-    DcMotor BL; //Motor Mecanum
-    DcMotor FR; //Motor Mecanum
-    DcMotor BR; //Motor Mecanum
-    DcMotor Intake1; //Motor Intake IN
-    DcMotor Intake2; //Motor Intake OUT
-    DcMotor Shooter; //Motor Shooter
+    private DcMotor FL; //Motor Mecanum
+    private DcMotor BL; //Motor Mecanum
+    private DcMotor FR; //Motor Mecanum
+    private DcMotor BR; //Motor Mecanum
+    private DcMotor Intake1; //Motor Intake IN
+    private DcMotor Intake2; //Motor Intake OUT
+    private DcMotor Shooter; //Motor Shooter
 
+    boolean Step1 = false;
+    boolean Step2 = false;
+    boolean ChangeStep2 = false;
+    boolean Step3 = false;
+    boolean ChangeStep3 = false;
+    boolean Step4 = false;
+    boolean ChangeStep4 = false;
+    boolean Step5 = false;
 
-    GoBildaPinpointDriver ooo; //Telemetry
+    private GoBildaPinpointDriver odo; //Odometry
     @Override
 
-    public void runOpMode() throws InterruptedException
-    { //Public void Inicio//
+    public void init()
+    { //public init inicio
         FL = hardwareMap.get(DcMotor.class, "FL");
         FR = hardwareMap.get(DcMotor.class, "FR");
         BL = hardwareMap.get(DcMotor.class, "BL");
@@ -32,26 +45,68 @@ public class AutonomoTony extends LinearOpMode
         Intake2 = hardwareMap.get(DcMotor.class, "Intake2");
         Shooter = hardwareMap.get(DcMotor.class, "Shooter");
 
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "Odo");
+
+        odo.setOffsets(-84.0, -168.0, DistanceUnit.MM);
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        odo.resetPosAndIMU();
+        Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
+        odo.setPosition(startPos);
+
+        telemetry.addData("X: ", startPos.getX(DistanceUnit.METER));
+        telemetry.addData("Y: ", startPos.getY(DistanceUnit.METER));
+        telemetry.addData("Angle: ", startPos.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Offset X: ", odo.getXOffset(DistanceUnit.MM));
+        telemetry.addData("Offset Y", odo.getYOffset(DistanceUnit.MM));
+
         FL.setDirection(DcMotorSimple.Direction.REVERSE);
         FR.setDirection(DcMotorSimple.Direction.REVERSE);
         BL.setDirection(DcMotorSimple.Direction.REVERSE);
-            waitForStart();
 
-        {  //wait for start Inicio//
-                FR.setPower(0.3);
-                FL.setPower(0.3);
-                BR.setPower(0.3);
-                BL.setPower(0.3);
+    } //public init final
 
-                sleep(5000);
+    @Override
+    public void loop()
+    {    //inicio void loop
 
-                FR.setPower(0);
-                FL.setPower(0);
-                BR.setPower(0);
-                BL.setPower(0);
+        Pose2D currentPos = odo.getPosition();
 
-                sleep(1000);
+        if(currentPos.getX(DistanceUnit.CM) < 61 && !Step1)
+        {
+            FL.setPower(0.4);
+            FR.setPower(0.4);
+            BL.setPower(0.4);
+            BR.setPower(0.4);
+        }
+        else if(currentPos.getX(DistanceUnit.CM) >= 61 && !Step1)
+        {
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Step1 = true;
+            ChangeStep2 = true;
+        }
+        if(currentPos.getHeading(AngleUnit.DEGREES)< 90 && !Step2 && ChangeStep2)
+        {
+            FL.setPower(-0.4);
+            FR.setPower(0.4);
+            BL.setPower(-0.4);
+            BR.setPower(0.4);
+        }
+        else if(currentPos.getHeading(AngleUnit.DEGREES)>= 90 && !Step2 && ChangeStep2)
+        {
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Step2 = true;
+            odo.resetPosAndIMU();
+            Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
+            odo.setPosition(startPos);
+            ChangeStep3 = true;
+        }
 
-        } //wait for star final//
-    } //Public void Final
+    }    //final void loop
 } //AutonomoTony Final//
