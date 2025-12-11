@@ -17,7 +17,6 @@ public class TeamRedUp extends LinearOpMode
     private DcMotor FR;
     private DcMotor BL;
     private DcMotor BR;
-    private DcMotor Intake1;
     private DcMotor Intake2;
     private DcMotor Shooter;
     private GoBildaPinpointDriver odo;
@@ -61,13 +60,16 @@ public class TeamRedUp extends LinearOpMode
     public void loop() {
         Pose2D currentPos = odo.getPosition();
 
-        if (currentPos.getX(DistanceUnit.CM) > 200 && !step1) {
+        if (currentPos.getX(DistanceUnit.CM) > 200 && !step1)
+        {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
             Shooter.setPower(-0.55);
-        } else if (currentPos.getX(DistanceUnit.CM) = 200 && !step1) {
+        }
+        else if (currentPos.getX(DistanceUnit.CM) = 200 && !step1)
+        {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
@@ -83,17 +85,13 @@ public class TeamRedUp extends LinearOpMode
             Intake2.setPower(0);
             Shooter.setPower(0);
 
-        } else if (currentPos.getHeading(AngleUnit.DEGREES) = 45 && !step2) {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            Intake2.setPower(0);
-            Shooter.setPower(0);
+        }
+        else if (currentPos.getHeading(AngleUnit.DEGREES) = 45 && !step2)
+        {
             stop();
             step2 = true;
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2)
+        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step3)
         {
             step3 = true;
             FL.setPower(0.3);
