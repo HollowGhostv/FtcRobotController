@@ -66,30 +66,41 @@ public class TeamBlueUp extends OpMode
     } //public init final
 
     @Override
-    public void loop()
-    {    //inicio void loop
+    public void loop() {    //inicio void loop
 
         Pose2D currentPos = odo.getPosition();
 
-        if(currentPos.getX(DistanceUnit.CM) > -164 && !Step1)
-        {
+        if (currentPos.getX(DistanceUnit.CM) > -164 && !Step1) {
             FL.setPower(-0.4);
             FR.setPower(-0.4);
             BL.setPower(-0.4);
             BR.setPower(-0.4);
-            Shooter.setPower(-0.65);
+            Shooter.setPower(-0.71);
             Intake2.setPower(0);
-        }
-        else if(currentPos.getX(DistanceUnit.CM) <= -164 && !Step1)
-        {
+        } else if (currentPos.getX(DistanceUnit.CM) <= -164 && !Step1) {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
-            Shooter.setPower(-0.95);
+            Shooter.setPower(-0.71);
             Intake2.setPower(1);
             Step1 = true;
             ChangeStep2 = true;
+        }
+        if (odo.getHeading(AngleUnit.DEGREES) > -90 && !Step2 && ChangeStep2) {
+            FL.setPower(-0.4);
+            FR.setPower(0.4);
+            BL.setPower(-0.4);
+            BR.setPower(0.4);
+        }
+        else if (odo.getHeading(AngleUnit.DEGREES) <= -90 && !Step2 && ChangeStep2)
+        {
+            stop();
+            Step2 = true;
+            odo.resetPosAndIMU();
+            Pose2D startPos = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
+            odo.setPosition(startPos);
+            ChangeStep3 = true;
         }
 
 
