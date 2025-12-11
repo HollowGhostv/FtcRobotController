@@ -62,7 +62,7 @@ public class TeamRedUp extends OpMode
     public void loop() {
         Pose2D currentPos = odo.getPosition();
 
-        if (currentPos.getX(DistanceUnit.CM) < -200 && !step1)
+        if (currentPos.getX(DistanceUnit.CM) > -200 && !step1)
         {
             FL.setPower(-0.3);
             FR.setPower(-0.3);
@@ -70,7 +70,7 @@ public class TeamRedUp extends OpMode
             BR.setPower(-0.3);
             Shooter.setPower(-0.55);
         }
-        else if (currentPos.getX(DistanceUnit.CM) >= -200 && !step1)
+        else if (currentPos.getX(DistanceUnit.CM) <= -200 && !step1)
         {
             FL.setPower(0);
             FR.setPower(0);
@@ -79,8 +79,6 @@ public class TeamRedUp extends OpMode
             Intake2.setPower(1);
             step1 = true;
             TurnStep2 = true;
-
-
         }
         if (currentPos.getHeading(AngleUnit.DEGREES) < 45 && !step2 && TurnStep2)
         {
@@ -117,6 +115,12 @@ public class TeamRedUp extends OpMode
         telemetry.addData("Y: ", currentPos.getY(DistanceUnit.CM));
         telemetry.addData("Angle: ", currentPos.getHeading(AngleUnit.DEGREES));
         telemetry.update();
-
+    }
+    public void stop()
+    {
+        FL.setPower(0);
+        FR.setPower(0);
+        BL.setPower(0);
+        BR.setPower(0);
     }
 }
