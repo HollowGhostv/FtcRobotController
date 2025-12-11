@@ -72,14 +72,14 @@ public class AutonomoTony extends OpMode
 
         Pose2D currentPos = odo.getPosition();
 
-        if(currentPos.getX(DistanceUnit.CM) < 61 && !Step1)
+        if(currentPos.getX(DistanceUnit.CM) < 30 && !Step1)
         {
             FL.setPower(-0.4);
             FR.setPower(-0.4);
             BL.setPower(-0.4);
             BR.setPower(-0.4);
         }
-        else if(currentPos.getX(DistanceUnit.CM) >= 61 && !Step1)
+        else if(currentPos.getX(DistanceUnit.CM) >= 30 && !Step1)
         {
             FL.setPower(0);
             FR.setPower(0);
