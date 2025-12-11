@@ -71,14 +71,14 @@ public class TeamBlueUp extends OpMode
 
         Pose2D currentPos = odo.getPosition();
 
-        if(currentPos.getX(DistanceUnit.CM) < -251 && !Step1)
+        if(currentPos.getX(DistanceUnit.CM) > -251 && !Step1)
         {
             FL.setPower(-0.4);
             FR.setPower(-0.4);
             BL.setPower(-0.4);
             BR.setPower(-0.4);
         }
-        else if(currentPos.getX(DistanceUnit.CM) >= -251 && !Step1)
+        else if(currentPos.getX(DistanceUnit.CM) <= -251 && !Step1)
         {
             FL.setPower(0);
             FR.setPower(0);
