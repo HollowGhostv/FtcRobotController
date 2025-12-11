@@ -23,7 +23,9 @@ public class TeamRedUp extends OpMode
     private final  ElapsedTime Time = new ElapsedTime();
 
     boolean step1 = false;
+    boolean TurnStep2 = false;
     boolean step2 = false;
+    boolean TurnStep3 = false;
     boolean step3 = false;
 
     @Override
@@ -76,8 +78,12 @@ public class TeamRedUp extends OpMode
             BR.setPower(0);
             Intake2.setPower(1);
             step1 = true;
+            TurnStep2 = true;
+
+
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) < 45 && !step2) {
+        if (currentPos.getHeading(AngleUnit.DEGREES) < 45 && !step2 && TurnStep2)
+        {
             FL.setPower(0.3);
             FR.setPower(-0.3);
             BL.setPower(0.3);
@@ -86,18 +92,39 @@ public class TeamRedUp extends OpMode
             Shooter.setPower(0);
 
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 45 && !step2)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 45 && !step2 && TurnStep2)
         {
             stop();
             step2 = true;
+            TurnStep3 = true;
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step3)
+        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step3 && TurnStep3)
         {
-            step3 = true;
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
+            step3 = true;
         }
+        else if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step3 && TurnStep3)
+        {
+            stop();
+            step2 = false;
+            TurnStep3 = false;
+        }
+        odo.update();
+        telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
+        telemetry.addData("Y: ", currentPos.getY(DistanceUnit.CM));
+        telemetry.addData("Angle: ", currentPos.getHeading(AngleUnit.DEGREES));
+        telemetry.update();
+
+    }
+
+    public void stop()
+    {
+        FL.setPower(0);
+        FR.setPower(0);
+        BL.setPower(0);
+        BR.setPower(0);
     }
 }
