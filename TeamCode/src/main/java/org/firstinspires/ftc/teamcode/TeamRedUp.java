@@ -80,7 +80,7 @@ public class TeamRedUp extends OpMode
             step1 = true;
             TurnStep2 = true;
         }
-        if (currentPos.getHeading(AngleUnit.DEGREES) < 45 && !step2 && TurnStep2)
+        if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step2 && TurnStep2)
         {
             FL.setPower(0.3);
             FR.setPower(-0.3);
@@ -90,7 +90,7 @@ public class TeamRedUp extends OpMode
             Shooter.setPower(0);
 
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 45 && !step2 && TurnStep2)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
         {
             stop();
             step2 = true;
