@@ -27,7 +27,8 @@ public class TeamRedUp extends OpMode
     boolean step3 = false;
 
     @Override
-    public void init() {
+    public void init()
+    {
         FL = hardwareMap.get(DcMotor.class, "FL");
         FR = hardwareMap.get(DcMotor.class, "FR");
         BL = hardwareMap.get(DcMotor.class, "BL");
