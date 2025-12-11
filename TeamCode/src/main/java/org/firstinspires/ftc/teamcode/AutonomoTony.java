@@ -72,7 +72,7 @@ public class AutonomoTony extends OpMode
 
         Pose2D currentPos = odo.getPosition();
 
-        if(currentPos.getX(DistanceUnit.CM) < -30 && !Step1)
+        if(currentPos.getX(DistanceUnit.CM) < -251 && !Step1)
         {
             FL.setPower(-0.4);
             FR.setPower(-0.4);
@@ -88,25 +88,7 @@ public class AutonomoTony extends OpMode
             Step1 = true;
             ChangeStep2 = true;
         }
-        if(currentPos.getHeading(AngleUnit.DEGREES)< 90 && !Step2 && ChangeStep2)
-        {
-            FL.setPower(-0.4);
-            FR.setPower(0.4);
-            BL.setPower(-0.4);
-            BR.setPower(0.4);
-        }
-        else if(currentPos.getHeading(AngleUnit.DEGREES)>= 90 && !Step2 && ChangeStep2)
-        {
-            FL.setPower(0);
-            FR.setPower(0);
-            BL.setPower(0);
-            BR.setPower(0);
-            Step2 = true;
-            odo.resetPosAndIMU();
-            Pose2D startPos = new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.DEGREES, 0);
-            odo.setPosition(startPos);
-            ChangeStep3 = true;
-        }
+
 
         odo.update();
         telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
