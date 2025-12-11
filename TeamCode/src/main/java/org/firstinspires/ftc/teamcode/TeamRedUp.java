@@ -24,6 +24,8 @@ public class TeamRedUp extends LinearOpMode
     private  ElapsedTime Time = new ElapsedTime();
 
     boolean step1 = false;
+    boolean step2 = false;
+    boolean step3 = false;
 
     @Override
     public void runOpMode() {
@@ -56,25 +58,48 @@ public class TeamRedUp extends LinearOpMode
         telemetry.addData("Offset Y", odo.getYOffset(DistanceUnit.MM));
     }
     @Override
-    public void loop()
-    {
+    public void loop() {
         Pose2D currentPos = odo.getPosition();
 
-        if (currentPos.getX(DistanceUnit.CM)  > 200 && !step1)
-        {
+        if (currentPos.getX(DistanceUnit.CM) > 200 && !step1) {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
             Shooter.setPower(-0.55);
-        }
-        else if (currentPos.getX(DistanceUnit.CM) = 200 && !step1)
-        {
+        } else if (currentPos.getX(DistanceUnit.CM) = 200 && !step1) {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
             BR.setPower(0);
             Intake2.setPower(1);
+            step1 = true;
+        }
+        if (currentPos.getHeading(AngleUnit.DEGREES) > 45 && !step2) {
+            FL.setPower(0.3);
+            FR.setPower(-0.3);
+            BL.setPower(0.3);
+            BR.setPower(-0.3);
+            Intake2.setPower(0);
+            Shooter.setPower(0);
+
+        } else if (currentPos.getHeading(AngleUnit.DEGREES) = 45 && !step2) {
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Intake2.setPower(0);
+            Shooter.setPower(0);
+            stop();
+            step2 = true;
+        }
+        if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2)
+        {
+            step3 = true;
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
         }
     }
 }
