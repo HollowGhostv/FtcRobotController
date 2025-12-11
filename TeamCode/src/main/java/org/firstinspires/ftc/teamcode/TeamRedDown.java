@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Autonomous
-public class TestSimple extends OpMode
+public class TeamRedDown extends OpMode
 {
     private DcMotor FL;
     private DcMotor FR;
@@ -21,7 +21,7 @@ public class TestSimple extends OpMode
     private GoBildaPinpointDriver odo;
     private DcMotor Intake2;
     private DcMotor Shooter;
-    private ElapsedTime Time = new ElapsedTime();
+    private final ElapsedTime Time = new ElapsedTime();
     boolean step1 = false;
     boolean TurnStep2 = false;
     boolean step2 = false;
