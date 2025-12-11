@@ -108,5 +108,11 @@ public class AutonomoTony extends OpMode
             ChangeStep3 = true;
         }
 
+        odo.update();
+        telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
+        telemetry.addData("Y: ", currentPos.getY(DistanceUnit.CM));
+        telemetry.addData("Angle: ", currentPos.getHeading(AngleUnit.DEGREES));
+        telemetry.update();
+
     }    //final void loop
 } //AutonomoTony Final//
