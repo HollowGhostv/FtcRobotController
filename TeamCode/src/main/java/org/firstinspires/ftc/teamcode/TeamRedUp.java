@@ -105,6 +105,18 @@ public class TeamRedUp extends OpMode
             step2 = true;
             TurnStep3 = true;
         }
+        if (currentPos.getX(DistanceUnit.CM) < 100 && !step3 && TurnStep3)
+        {
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
+        }
+        else if (currentPos.getX(DistanceUnit.CM) >= 100 && !step3 && TurnStep3)
+        {
+            stop();
+            step3 = true;
+        }
 
         odo.update();
         telemetry.addData("X: ", currentPos.getX(DistanceUnit.CM));
