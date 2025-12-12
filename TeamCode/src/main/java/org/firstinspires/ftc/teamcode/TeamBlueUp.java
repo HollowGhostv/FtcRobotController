@@ -71,10 +71,10 @@ public class TeamBlueUp extends OpMode
         Pose2D currentPos = odo.getPosition();
 
         if (currentPos.getX(DistanceUnit.CM) > -164 && !Step1) {
-            FL.setPower(-0.4);
-            FR.setPower(-0.4);
-            BL.setPower(-0.4);
-            BR.setPower(-0.4);
+            FL.setPower(-0.3);
+            FR.setPower(-0.3);
+            BL.setPower(-0.3);
+            BR.setPower(-0.3);
             Shooter.setPower(-0.64);
             Intake2.setPower(0);
         } else if (currentPos.getX(DistanceUnit.CM) <= -164 && !Step1) {
@@ -88,11 +88,12 @@ public class TeamBlueUp extends OpMode
             ChangeStep2 = true;
         }
         if (odo.getHeading(AngleUnit.DEGREES) > -5 && !Step2 && ChangeStep2) {
-            FL.setPower(-0.4);
-            FR.setPower(0.4);
-            BL.setPower(-0.4);
-            BR.setPower(0.4);
-        } else if (odo.getHeading(AngleUnit.DEGREES) <= -5  && !Step2 && ChangeStep2) {
+            FL.setPower(-0.3);
+            FR.setPower(0.3);
+            BL.setPower(-0.3);
+            BR.setPower(0.3);
+        }
+        else if (odo.getHeading(AngleUnit.DEGREES) <= -5 && !Step2 && ChangeStep2) {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
@@ -106,10 +107,10 @@ public class TeamBlueUp extends OpMode
             ChangeStep3 = true;
         }
         if (currentPos.getX(DistanceUnit.CM) < 45 && !Step3 && ChangeStep3) {
-            FL.setPower(0.4);
-            FR.setPower(0.4);
-            BL.setPower(0.4);
-            BR.setPower(0.4);
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
         } else if (currentPos.getX(DistanceUnit.CM) >= 45 && !Step3 && ChangeStep3)
         {
             stop();
