@@ -100,7 +100,7 @@ public class TeamBlueUp extends OpMode
             BL.setPower(0);
             BR.setPower(0);
             Shooter.setPower(0);
-            Intake2.setPower(-1);
+            Intake2.setPower(-0.1);
             Step2 = true;
             odo.resetPosAndIMU();
             Pose2D startPos = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);

@@ -96,7 +96,7 @@ public class TeamRedUp extends OpMode
                 Shooter.setPower(0);
             }
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 45 && !step2 && TurnStep2)
         {
             stop();
             odo.resetPosAndIMU();
