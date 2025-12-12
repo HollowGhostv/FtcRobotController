@@ -83,7 +83,7 @@ public class TeamRedUp extends OpMode
         {
             Time.startTime();
 
-            if (Time.seconds() > 5)
+            if (Time.seconds() > 12)
             {
                 FL.setPower(0.3);
                 FR.setPower(-0.3);
