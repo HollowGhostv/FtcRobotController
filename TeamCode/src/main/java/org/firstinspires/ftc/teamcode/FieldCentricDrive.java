@@ -4,10 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
+
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 @TeleOp
 
@@ -23,12 +26,13 @@ public class FieldCentricDrive extends OpMode {
     private DcMotor Shooter;
     private DcMotor Intake1;
     private DcMotor Intake2;
+    VoltageSensor Battery;
 
     @Override
 
     public void init()
     {
-        odo = hardwareMap.get(GoBildaPinpointDriver.class, "Odometry");
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "Odo");
 
         FL = hardwareMap.get(DcMotor.class, "FL");
         FR = hardwareMap.get(DcMotor.class, "FR");
@@ -38,6 +42,8 @@ public class FieldCentricDrive extends OpMode {
         Shooter = hardwareMap.get(DcMotor.class, "Shooter");
         Intake1 = hardwareMap.get(DcMotor.class, "Intake1");
         Intake2 = hardwareMap.get(DcMotor.class, "Intake2");
+
+        Battery = hardwareMap.voltageSensor.iterator().next();
 
         FR.setDirection(DcMotorSimple.Direction.REVERSE);
         FL.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -124,23 +130,49 @@ public class FieldCentricDrive extends OpMode {
     {
         move();
 
-        double SPower = -0.65;
+        if (Battery.getVoltage() >= 13)
+        {
+            double SPower = -0.55;
 
-        if (gamepad1.dpad_down)
-        {
-            SPower = -0.65;
-        } else if (gamepad1.dpad_up)
-        {
-            SPower = -0.9;
-        }
+            if (gamepad1.dpad_up)
+            {
+                SPower = -0.7;
+            }
+            else if (gamepad1.dpad_down)
+            {
+                SPower = -0.55;
+            }
 
-        if (gamepad1.right_trigger != 0)
-        {
-            Shooter.setPower(SPower);
+            if (gamepad1.right_trigger != 0)
+            {
+                Shooter.setPower(SPower);
+            }
+            else if (gamepad1.left_trigger != 0)
+            {
+                Shooter.setPower(0);
+            }
         }
-        else if (gamepad1.left_trigger != 0)
+        else if (Battery.getVoltage() < 13)
         {
-            Shooter.setPower(0);
+            double SPower = -0.65;
+
+            if (gamepad1.dpad_up)
+            {
+                SPower = -0.8;
+            }
+            else if (gamepad1.dpad_down)
+            {
+                SPower = -0.65;
+            }
+
+            if (gamepad1.right_trigger != 0)
+            {
+                Shooter.setPower(SPower);
+            }
+            else if (gamepad1.left_trigger != 0)
+            {
+                Shooter.setPower(0);
+            }
         }
 
         if (gamepad1.right_bumper)
