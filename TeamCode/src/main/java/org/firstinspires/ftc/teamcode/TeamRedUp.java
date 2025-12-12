@@ -83,7 +83,7 @@ public class TeamRedUp extends OpMode
         {
             Time.startTime();
 
-            if (Time.seconds() > 5)
+            if (Time.seconds() > 12)
             {
                 FL.setPower(0.3);
                 FR.setPower(-0.3);
@@ -91,7 +91,7 @@ public class TeamRedUp extends OpMode
                 BR.setPower(-0.3);
             }
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) >= 45 && !step2 && TurnStep2)
+        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
         {
             stop();
             odo.resetPosAndIMU();
@@ -101,6 +101,18 @@ public class TeamRedUp extends OpMode
             Shooter.setPower(0);
             step2 = true;
             TurnStep3 = true;
+        }
+        if (currentPos.getX(DistanceUnit.CM) < 100 && !step3 && TurnStep3)
+        {
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
+        }
+        else if (currentPos.getX(DistanceUnit.CM) >= 100 && !step3 && TurnStep3)
+        {
+            stop();
+            step3 = true;
         }
 
         odo.update();
