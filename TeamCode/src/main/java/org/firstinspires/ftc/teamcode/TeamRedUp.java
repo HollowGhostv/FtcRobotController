@@ -105,14 +105,14 @@ public class TeamRedUp extends OpMode
             odo.setPosition(startPos);
             TurnStep3 = true;
         }
-        if (currentPos.getX(DistanceUnit.CM) < 100 && !step3 && TurnStep3)
+        if (currentPos.getX(DistanceUnit.CM) < 50 && !step3 && TurnStep3)
         {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
         }
-        else if (currentPos.getX(DistanceUnit.CM) >= 100 && !step3 && TurnStep3)
+        else if (currentPos.getX(DistanceUnit.CM) >= 50 && !step3 && TurnStep3)
         {
             stop();
             step3 = true;
