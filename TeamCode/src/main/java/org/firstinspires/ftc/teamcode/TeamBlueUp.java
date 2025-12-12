@@ -113,6 +113,7 @@ public class TeamBlueUp extends OpMode
         } else if (currentPos.getX(DistanceUnit.CM) >= 45 && !Step3 && ChangeStep3)
         {
             stop();
+            Step3 = true;
         }
 
         odo.update();
