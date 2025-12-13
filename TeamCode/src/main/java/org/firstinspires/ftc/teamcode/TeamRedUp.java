@@ -68,48 +68,44 @@ public class TeamRedUp extends OpMode
             FR.setPower(-0.3);
             BL.setPower(-0.3);
             BR.setPower(-0.3);
-            Shooter.setPower(-0.66);
+            Shooter.setPower(-0.67);
         }
         else if (currentPos.getX(DistanceUnit.CM) <= -170 && !step1)
         {
             stop();
-            Shooter.setPower(-0.66);
+            Shooter.setPower(-0.67);
             Intake2.setPower(1);
             step1 = true;
             TurnStep2 = true;
         }
 
-        if (currentPos.getHeading(AngleUnit.DEGREES) != 45 && !step2 && TurnStep2)
-        {
-            Time.startTime();
-
-            if (Time.seconds() > 12)
-            {
-                FL.setPower(0.3);
-                FR.setPower(-0.3);
-                BL.setPower(0.3);
-                BR.setPower(-0.3);
-            }
+        if (odo.getHeading(AngleUnit.DEGREES) > -45 && !step2 && TurnStep2) {
+            FL.setPower(0.3);
+            FR.setPower(-0.3);
+            BL.setPower(0.3);
+            BR.setPower(-0.3);
         }
-        else if (currentPos.getHeading(AngleUnit.DEGREES) == 45 && !step2 && TurnStep2)
-        {
-            stop();
+        else if (odo.getHeading(AngleUnit.DEGREES) <= -45 && !step2 && TurnStep2) {
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
+            Shooter.setPower(0);
+            Intake2.setPower(-0.1);
+            step2 = true;
             odo.resetPosAndIMU();
             Pose2D startPos = new Pose2D(DistanceUnit.CM, 0, 0, AngleUnit.DEGREES, 0);
             odo.setPosition(startPos);
-            Intake2.setPower(0);
-            Shooter.setPower(0);
-            step2 = true;
             TurnStep3 = true;
         }
-        if (currentPos.getX(DistanceUnit.CM) < 100 && !step3 && TurnStep3)
+        if (currentPos.getX(DistanceUnit.CM) < 50 && !step3 && TurnStep3)
         {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
         }
-        else if (currentPos.getX(DistanceUnit.CM) >= 100 && !step3 && TurnStep3)
+        else if (currentPos.getX(DistanceUnit.CM) >= 50 && !step3 && TurnStep3)
         {
             stop();
             step3 = true;

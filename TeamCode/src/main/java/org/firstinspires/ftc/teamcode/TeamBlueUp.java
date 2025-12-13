@@ -71,10 +71,10 @@ public class TeamBlueUp extends OpMode
         Pose2D currentPos = odo.getPosition();
 
         if (currentPos.getX(DistanceUnit.CM) > -164 && !Step1) {
-            FL.setPower(-0.4);
-            FR.setPower(-0.4);
-            BL.setPower(-0.4);
-            BR.setPower(-0.4);
+            FL.setPower(-0.3);
+            FR.setPower(-0.3);
+            BL.setPower(-0.3);
+            BR.setPower(-0.3);
             Shooter.setPower(-0.64);
             Intake2.setPower(0);
         } else if (currentPos.getX(DistanceUnit.CM) <= -164 && !Step1) {
@@ -87,12 +87,13 @@ public class TeamBlueUp extends OpMode
             Step1 = true;
             ChangeStep2 = true;
         }
-        if (odo.getHeading(AngleUnit.DEGREES) > -20 && !Step2 && ChangeStep2) {
-            FL.setPower(-0.4);
-            FR.setPower(0.4);
-            BL.setPower(-0.4);
-            BR.setPower(0.4);
-        } else if (odo.getHeading(AngleUnit.DEGREES) <= -20 && !Step2 && ChangeStep2) {
+        if (odo.getHeading(AngleUnit.DEGREES) < 45 && !Step2 && ChangeStep2) {
+            FL.setPower(-0.3);
+            FR.setPower(0.3);
+            BL.setPower(-0.3);
+            BR.setPower(0.3);
+        }
+        else if (odo.getHeading(AngleUnit.DEGREES) >= 45 && !Step2 && ChangeStep2) {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
@@ -105,15 +106,19 @@ public class TeamBlueUp extends OpMode
             odo.setPosition(startPos);
             ChangeStep3 = true;
         }
-        if (currentPos.getX(DistanceUnit.CM) < 45 && !Step3 && ChangeStep3) {
-            FL.setPower(0.4);
-            FR.setPower(0.4);
-            BL.setPower(0.4);
-            BR.setPower(0.4);
-        } else if (currentPos.getX(DistanceUnit.CM) >= 45 && !Step3 && ChangeStep3)
+        if (currentPos.getX(DistanceUnit.CM) < 60 && !Step3 && ChangeStep3) {
+            FL.setPower(0.3);
+            FR.setPower(0.3);
+            BL.setPower(0.3);
+            BR.setPower(0.3);
+        } else if (currentPos.getX(DistanceUnit.CM) >= 60 && !Step3 && ChangeStep3)
         {
-            stop();
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
             Step3 = true;
+            stop();
         }
 
         odo.update();
