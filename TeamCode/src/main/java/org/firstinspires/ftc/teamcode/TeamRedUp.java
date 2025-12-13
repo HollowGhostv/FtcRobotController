@@ -62,7 +62,7 @@ public class TeamRedUp extends OpMode
     public void loop() {
         Pose2D currentPos = odo.getPosition();
 
-        if (currentPos.getX(DistanceUnit.CM) > -170 && !step1)
+        if (currentPos.getX(DistanceUnit.CM) > -100 && !step1)
         {
             FL.setPower(-0.3);
             FR.setPower(-0.3);
@@ -70,10 +70,10 @@ public class TeamRedUp extends OpMode
             BR.setPower(-0.3);
             Shooter.setPower(-0.67);
         }
-        else if (currentPos.getX(DistanceUnit.CM) <= -170 && !step1)
+        else if (currentPos.getX(DistanceUnit.CM) <= -100 && !step1)
         {
             stop();
-            Shooter.setPower(-0.67);
+            Shooter.setPower(-0.7);
             Intake2.setPower(1);
             step1 = true;
             TurnStep2 = true;
