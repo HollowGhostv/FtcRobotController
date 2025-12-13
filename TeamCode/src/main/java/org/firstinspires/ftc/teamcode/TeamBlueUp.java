@@ -106,12 +106,12 @@ public class TeamBlueUp extends OpMode
             odo.setPosition(startPos);
             ChangeStep3 = true;
         }
-        if (currentPos.getX(DistanceUnit.CM) > -60 && !Step3 && ChangeStep3) {
+        if (currentPos.getX(DistanceUnit.CM) < 60 && !Step3 && ChangeStep3) {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
-        } else if (currentPos.getX(DistanceUnit.CM) <= -60 && !Step3 && ChangeStep3)
+        } else if (currentPos.getX(DistanceUnit.CM) >= 60 && !Step3 && ChangeStep3)
         {
             FL.setPower(0);
             FR.setPower(0);
