@@ -87,13 +87,13 @@ public class TeamBlueUp extends OpMode
             Step1 = true;
             ChangeStep2 = true;
         }
-        if (odo.getHeading(AngleUnit.DEGREES) > -5 && !Step2 && ChangeStep2) {
+        if (odo.getHeading(AngleUnit.DEGREES) > -15 && !Step2 && ChangeStep2) {
             FL.setPower(-0.3);
             FR.setPower(0.3);
             BL.setPower(-0.3);
             BR.setPower(0.3);
         }
-        else if (odo.getHeading(AngleUnit.DEGREES) <= -5 && !Step2 && ChangeStep2) {
+        else if (odo.getHeading(AngleUnit.DEGREES) <= -15 && !Step2 && ChangeStep2) {
             FL.setPower(0);
             FR.setPower(0);
             BL.setPower(0);
@@ -106,15 +106,19 @@ public class TeamBlueUp extends OpMode
             odo.setPosition(startPos);
             ChangeStep3 = true;
         }
-        if (currentPos.getX(DistanceUnit.CM) < 45 && !Step3 && ChangeStep3) {
+        if (currentPos.getX(DistanceUnit.CM) < 20 && !Step3 && ChangeStep3) {
             FL.setPower(0.3);
             FR.setPower(0.3);
             BL.setPower(0.3);
             BR.setPower(0.3);
-        } else if (currentPos.getX(DistanceUnit.CM) >= 45 && !Step3 && ChangeStep3)
+        } else if (currentPos.getX(DistanceUnit.CM) >= 20 && !Step3 && ChangeStep3)
         {
-            stop();
+            FL.setPower(0);
+            FR.setPower(0);
+            BL.setPower(0);
+            BR.setPower(0);
             Step3 = true;
+            stop();
         }
 
         odo.update();
