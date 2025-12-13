@@ -130,7 +130,7 @@ public class FieldCentricDrive extends OpMode {
     {
         move();
 
-        if (Battery.getVoltage() >= 13)
+        /*if (Battery.getVoltage() >= 13)
         {
             double SPower = -0.55;
 
@@ -173,6 +173,26 @@ public class FieldCentricDrive extends OpMode {
             {
                 Shooter.setPower(0);
             }
+        }
+
+         */
+
+        double SPower = -0.6;
+
+        if (gamepad1.dpad_up)
+        {
+            SPower = -0.7;
+        } else if (gamepad1.dpad_down) {
+            SPower = -0.6;
+        }
+
+        if (gamepad1.right_trigger != 0)
+        {
+            Shooter.setPower(SPower);
+        }
+        else if (gamepad1.left_trigger != 0)
+        {
+            Shooter.setPower(0);
         }
 
         if (gamepad1.right_bumper)
